@@ -204,8 +204,10 @@ class PBSScheduler(AbstractClusterScheduler):
 
     def submit_command(self, output_file, job_name):
         # Note for posterity: ssh bint01 "source BLAH && qsub BLAH" doesn't work
-        return """ssh bint01 "/usr/syscom/nsg/opt/torque/4.2.6/bin/qsub -S /bin/bash -N %s -e %s -o %s -j oe" """ % \
-        (job_name, output_file, output_file)
+        #return """ssh bint01 "/usr/syscom/nsg/opt/torque/4.2.6/bin/qsub -S /bin/bash -N %s -e %s -o %s -j oe" """ % \
+        #(job_name, output_file, output_file)
+        #return """qsub -S /bin/bash -N %s -e %s -o %s -j oe" """ % (job_name, output_file, output_file)
+        return """qsub -N %s -e %s -o %s -j oe """ % (job_name, output_file, output_file)
         # ' '.join(['ssh', 'bint01', '"qsub', '-S', '/bin/bash',
         #            '-N', "%s" % (job_name),
         #            '-e', output_file,
@@ -245,3 +247,4 @@ class PBSScheduler(AbstractClusterScheduler):
             return False
         else:
             return True
+
