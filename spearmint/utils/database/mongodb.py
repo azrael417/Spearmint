@@ -191,9 +191,15 @@ from abstractdb                  import AbstractDB
 from spearmint.utils.compression import compress_nested_container, decompress_nested_container
 
 class MongoDB(AbstractDB):
+    # def __init__(self, database_address='localhost', database_name='spearmint', port=None):
     def __init__(self, database_address='localhost', database_name='spearmint'):
         try:
+            # self.client = pymongo.MongoClient(database_address)
+            # self.URI = "mongodb://%s:%s" % (database_address,port)
+
             self.client = pymongo.MongoClient(database_address)
+            # self.client = pymongo.MongoClient(self.URI)
+
             self.db     = self.client[database_name]
             
             # Get the ID of this connection for locking.

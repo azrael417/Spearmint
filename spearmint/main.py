@@ -210,10 +210,13 @@ def get_options():
                       help="Configuration file name.",
                       type="string", default="config.json")
 
+    parser.add_option("--port", dest="port", type="string")
+
     (commandline_kwargs, args) = parser.parse_args()
 
     # Read in the config file
-    expt_dir  = os.path.realpath(os.path.expanduser(args[0]))
+    # expt_dir  = os.path.realpath(os.path.expanduser(args[0]))
+    expt_dir =  os.path.realpath(os.path.expanduser(os.path.dirname(commandline_kwargs.config_file)))
     if not os.path.isdir(expt_dir):
         raise Exception("Cannot find directory %s" % expt_dir)
     expt_file = os.path.join(expt_dir, commandline_kwargs.config_file)
@@ -234,7 +237,8 @@ def get_options():
     # Set DB address
     db_address = parse_db_address(options)
     if 'database' not in options:
-        options['database'] = {'name': 'spearmint', 'address': db_address}
+        # options['database'] = {'name': 'spearmint', 'address': db_address, 'port': commandline_kwargs.port}
+        options['database'] = {'name': 'spearmint', 'address': "%s:%s" % (db_address, commandline_kwargs.port)}
     else:
         options['database']['address'] = db_address
 
@@ -257,9 +261,13 @@ def main():
 
     # Connect to the database
     db_address = options['database']['address']
-    sys.stderr.write('Using database at %s.\n' % db_address)        
+    # port = options['database']['port']
+
+    # print port
+    sys.stderr.write('Using database at %s.\n' % db_address)
     db         = MongoDB(database_address=db_address)
-    
+    # db         = MongoDB(database_address=db_address, port=port)
+
     while True:
 
         for resource_name, resource in resources.iteritems():

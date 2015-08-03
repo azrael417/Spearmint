@@ -191,7 +191,7 @@ import sys
 import os
 import json
 
-
+import socket
 
 # For converting a string of args into a dict of args
 # (one could then call parse_args on the output)
@@ -229,7 +229,8 @@ def parse_db_address(cfg):
         if 'database' in cfg and 'address' in cfg['database']:
             db_address = cfg['database']['address']
         else:
-            db_address = 'localhost'
+            # db_address = 'localhost'
+            db_address = socket.gethostname()
 
     return db_address
 

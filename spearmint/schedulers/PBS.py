@@ -207,6 +207,7 @@ class PBSScheduler(AbstractClusterScheduler):
         #return """ssh bint01 "/usr/syscom/nsg/opt/torque/4.2.6/bin/qsub -S /bin/bash -N %s -e %s -o %s -j oe" """ % \
         #(job_name, output_file, output_file)
         #return """qsub -S /bin/bash -N %s -e %s -o %s -j oe" """ % (job_name, output_file, output_file)
+        # TODO: include other params since it currently only runs on the debug queue
         return """qsub -N %s -e %s -o %s -j oe """ % (job_name, output_file, output_file)
         # ' '.join(['ssh', 'bint01', '"qsub', '-S', '/bin/bash',
         #            '-N', "%s" % (job_name),
