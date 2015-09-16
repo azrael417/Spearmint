@@ -208,14 +208,14 @@ class AbstractClusterScheduler(object):
     def output_regexp(self):
         pass
 
-
+    # TODO: document the changes
     def submit(self, job_id, experiment_name, experiment_dir, database_address):
         base_path = os.path.dirname(os.path.realpath(spearmint.__file__))
         run_command = '#!/bin/bash\n'
         if "environment-file" in self.options:
             run_command += 'source %s\n' % self.options["environment-file"]
         run_command += 'cd %s\n' % base_path
-        run_command += 'python launcher.py --database-address=%s --experiment-name=%s --job-id=%s %s' % \
+        run_command += 'aprun -n 24 python launcher.py --database-address=%s --experiment-name=%s --job-id=%s %s' % \
                (database_address, experiment_name, job_id, experiment_dir)
 
         # Since "localhost" might mean something different on the machine
