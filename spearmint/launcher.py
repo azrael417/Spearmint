@@ -216,7 +216,7 @@ def main():
     if not options.job_id:
         parser.error('Job ID not given or an ID of 0 was used.')
 
-    launch(options.db_address, options.port, options.experiment_name, options.job_id)
+    launch(options.db_address, args.port, options.experiment_name, options.job_id)
 
 def launch(db_address, port, experiment_name, job_id):
     """

@@ -183,6 +183,8 @@
 # its Institution.
 
 import zlib
+import struct
+import base64 as b64
 import numpy as np
 
 COMPRESS_TYPE = 'compressed array'
@@ -190,13 +192,17 @@ COMPRESS_TYPE = 'compressed array'
 # TODO: see if there is a better way to encode this than base64
 # It takes about 0.65 seconds to compress a 1000x1000 array on a 2011 Macbook air
 def compress_array(a):
+    compressed = zlib.compress(a)
+    encoded = b64.encodebytes(compressed)
     return {'ctype'  : COMPRESS_TYPE,
             'shape'  : list(a.shape),
-            'value'  : (zlib.compress(a))}
+            'value'  : encoded}
 
 # It takes about 0.15 seconds to decompress a 1000x1000 array on a 2011 Macbook air
 def decompress_array(a):
-    return np.fromstring(zlib.decompress(a['value'])).reshape(a['shape'])
+    decoded = b64.decodebytes(a['value'])
+    decompressed = zlib.decompress(decoded)
+    return np.fromstring(decompressed).reshape(a['shape'])
 
 def compress_nested_container(u_container):
     if isinstance(u_container, dict):
@@ -225,8 +231,9 @@ def compress_nested_container(u_container):
         return clist
 
 def decompress_nested_container(c_container):
+    
     if isinstance(c_container, dict):
-        if 'ctye' in c_container and c_container['ctype'] == COMPRESS_TYPE:
+        if 'ctype' in c_container and c_container['ctype'] == COMPRESS_TYPE:
             try:
                 return decompress_array(c_container)
             except:

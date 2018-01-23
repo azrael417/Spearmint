@@ -292,7 +292,9 @@ class BaseTask(object):
         v = np.zeros(self.num_dims)
         for name, param in params.items():
             indices = self.variables_meta[name]['indices']
-
+            
+            print("DEBUG:",name,param['type'],param["values"])
+            
             if param['type'] == 'int' or param['type'] == 'float':
                 v[indices] = param['values']
             elif param['type'] == 'enum':

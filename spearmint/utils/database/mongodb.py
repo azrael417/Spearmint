@@ -249,7 +249,7 @@ class MongoDB(AbstractDB):
 
         dbcollection = self.db[experiment_name][experiment_field]
         dbdocs       = list(dbcollection.find(field_filters))
-
+        
         if len(dbdocs) == 0:
             return None
         elif len(dbdocs) == 1:
