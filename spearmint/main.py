@@ -310,7 +310,7 @@ def main():
 
                 # Print out the status of the resources
                 # resource.printStatus(jobs)
-                print_resources_status(resources.values(), jobs)
+                print_resources_status(list(resources.values()), jobs)
 
         # If no resources are accepting jobs, sleep
         # (they might be accepting if suggest takes a while and so some jobs already finished by the time this point is reached)

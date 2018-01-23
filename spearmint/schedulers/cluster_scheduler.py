@@ -276,21 +276,21 @@ class AbstractClusterScheduler(object):
 
         #important, get user environment
         my_env = os.environ.copy()
-
+        
+        #start process
         process = subprocess.Popen(submit_command, 
-                                stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT,
-                                env=my_env,
-                                shell=True)
-        output, std_err = process.communicate(input=run_command)
+                                stderr=subprocess.PIPE,
+                                env=my_env)
+        output, std_err = process.communicate()
         
-        print(output,std_err)
-        
-        process.stdin.close()
+        #decode string
+        output = output.decode("utf-8")
+        std_err = std_err.decode("utf-8")
 
         # Parse out the process id from text
         match = re.search(self.output_regexp(), output)
+        
         try:
             return int(match.group(1))
         except:
