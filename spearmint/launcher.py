@@ -216,14 +216,14 @@ def main():
     if not options.job_id:
         parser.error('Job ID not given or an ID of 0 was used.')
 
-    launch(options.db_address, args.port, options.experiment_name, options.job_id)
+    launch(options.db_address, options.experiment_name, options.job_id)
 
-def launch(db_address, port, experiment_name, job_id):
+def launch(db_address, experiment_name, job_id):
     """
     Launches a job from on a given id.
     """
 
-    db  = MongoDB(database_address=db_address, port=port)
+    db  = MongoDB(database_address=db_address)
     job = db.load(experiment_name, 'jobs', {'id' : job_id})
 
     start_time        = time.time()
@@ -305,7 +305,7 @@ def python_launcher(job):
 
     # Convert the JSON object into useful parameters.
     params = {}
-    for name, param in job['params'].iteritems():
+    for name, param in job['params'].items():
         vals = param['values']
 
         if param['type'].lower() == 'float':
@@ -351,7 +351,7 @@ def matlab_launcher(job):
     session.run("cd('%s')" % os.path.realpath(job['expt_dir']))
 
     session.run('params = struct()')
-    for name, param in job['params'].iteritems():
+    for name, param in job['params'].items():
         vals = param['values']
 
         # sys.stderr.write('%s = %s\n' % (param['name'], str(vals)))

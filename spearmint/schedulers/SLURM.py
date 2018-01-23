@@ -190,8 +190,8 @@ def init(*args, **kwargs):
 
 class SLURMScheduler(AbstractClusterScheduler):
 
-    def submit_command(self, constraints, output_file, job_name):
-        return 'sbatch -C %s -e %s -o %s -J %s' % (constraints, output_file, output_file, job_name)
+    def submit_command(self, output_file, job_name):
+        return 'sbatch -e %s -o %s -J %s' % (output_file, output_file, job_name)
 
     def output_regexp(self):
         return r'Submitted batch job (\d+)'

@@ -209,15 +209,47 @@ class AbstractClusterScheduler(object):
         pass
 
     # TODO: document the changes
-    def submit(self, job_id, experiment_name, experiment_dir, database_address):
+    def submit(self, job_id, experiment_name, experiment_dir, database_address, options=None):
         base_path = os.path.dirname(os.path.realpath(spearmint.__file__))
+        
+        #parse options if available
+        exec_command = ""
+        if options:
+            if options.get("scheduler","") == "SLURM":
+                #node config and initial setup
+                num_nodes = options.get("num-nodes",1)
+                ranks_per_node = options.get("num-ranks-per-node",1)
+                cores_per_socket = options.get("cores-per-socket",1)
+                exec_command = "srun -N %i -n %i -c %i" % (num_nodes, num_nodes*ranks_per_node,cores_per_socket)
+        
+        #create the run command
         run_command = '#!/bin/bash\n'
+        #wc time
+        wctime = options.get("wc-time",None)
+        if wctime:
+            if options.get("scheduler","") == "SLURM":
+                run_command += "#SBATCH -t %s\n" % (wctime)
+        #preamble
+        preamble = options.get("preamble",None)
+        if preamble:
+            run_command += preamble+'\n'
         if "environment-file" in self.options:
             run_command += 'source %s\n' % self.options["environment-file"]
         run_command += 'cd %s\n' % base_path
-        run_command += 'aprun -n 24 python launcher.py --database-address=%s --experiment-name=%s --job-id=%s %s' % \
-               (database_address, experiment_name, job_id, experiment_dir)
-
+        run_command += '%s python launcher.py --database-address=%s --experiment-name=%s --job-id=%s %s' % \
+               (exec_command, database_address, experiment_name, job_id, experiment_dir)
+        
+        #submit directory
+        submit_directory = os.path.join(experiment_dir, 'submit')
+        if not os.path.isdir(submit_directory):
+            os.mkdir(submit_directory)
+        
+        submit_filename = os.path.join(submit_directory, 'submit-%08d.sh' % job_id)
+        
+        #write command into file
+        with open(submit_filename,"w+") as f:
+            f.write(run_command)
+        
         # Since "localhost" might mean something different on the machine
         # we are submitting to, set it to the actual name of the parent machine
         if database_address == "localhost":
@@ -236,17 +268,25 @@ class AbstractClusterScheduler(object):
         output_filename = os.path.join(output_directory, '%08d.out' % job_id)
         output_file = open(output_filename, 'w')
         
-        submit_command = self.submit_command("knl", output_filename, '%s-%08d' % (experiment_name, job_id))
+        submit_command = self.submit_command(output_filename, '%s-%08d' % (experiment_name, job_id))
         if 'scheduler-args' in self.options:
             submit_command += ' ' + self.options['scheduler-args']
-        # submit_command = shlex.split(submit_command)
+        submit_command += ' ' + submit_filename
+        submit_command = shlex.split(submit_command)
+
+        #important, get user environment
+        my_env = os.environ.copy()
 
         process = subprocess.Popen(submit_command, 
                                 stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT, 
+                                stderr=subprocess.STDOUT,
+                                env=my_env,
                                 shell=True)
         output, std_err = process.communicate(input=run_command)
+        
+        print(output,std_err)
+        
         process.stdin.close()
 
         # Parse out the process id from text

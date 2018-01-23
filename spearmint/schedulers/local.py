@@ -194,7 +194,7 @@ def init(*args, **kwargs):
 class LocalScheduler(AbstractScheduler):
     """scheduler which submits jobs to the local machine via a shell command"""
 
-    def submit(self, job_id, experiment_name, experiment_dir, database_address):
+    def submit(self, job_id, experiment_name, experiment_dir, database_address, options=None):
         base_path = os.path.dirname(os.path.realpath(spearmint.__file__))
         cmd = ('python %s/launcher.py --database-address %s --experiment-name %s --job-id %s' % 
                (base_path, database_address, experiment_name, job_id))

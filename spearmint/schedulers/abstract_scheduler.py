@@ -192,7 +192,7 @@ class AbstractScheduler(object):
         self.options = options
         
     @abstractmethod
-    def submit(self, job_id, experiment_name, experiment_dir, database_address):
+    def submit(self, job_id, experiment_name, experiment_dir, database_address, options):
         pass
 
     @abstractmethod

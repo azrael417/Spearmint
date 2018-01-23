@@ -280,6 +280,7 @@ def main():
             #       resource is not full, we might wait because of cost incurred
             # Note: I chose to fill up one resource and them move on to the next
             # You could also do it the other way, by changing "while" to "if" here
+            resource_options = options.get("resources").get(resource_name)
 
             while resource.acceptingJobs(jobs):
 
@@ -292,9 +293,9 @@ def main():
 
                 # Get a suggestion for the next job
                 suggested_job = get_suggestion(chooser, resource.tasks, db, expt_dir, options, resource_name)
-    
+                
                 # Submit the job to the appropriate resource
-                process_id = resource.attemptDispatch(experiment_name, suggested_job, db_address, expt_dir)
+                process_id = resource.attemptDispatch(experiment_name, suggested_job, db_address, expt_dir, resource_options)
 
                 # Set the status of the job appropriately (successfully submitted or not)
                 if process_id is None:
