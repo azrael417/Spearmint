@@ -241,9 +241,6 @@ def resource_factory(resource_name, task_names, config):
                     scheduler_class, max_concurrent, max_finished_jobs)
 
 def print_resources_status(resources, jobs):
-    
-    print(resources)
-    
     """Print out the status of the resources"""
     if len(resources) == 1:
         sys.stderr.write('Status: %d pending, %d complete.\n\n'
