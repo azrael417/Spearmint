@@ -235,8 +235,8 @@ class AbstractClusterScheduler(object):
 
         output_filename = os.path.join(output_directory, '%08d.out' % job_id)
         output_file = open(output_filename, 'w')
-
-        submit_command = self.submit_command(output_filename, '%s-%08d' % (experiment_name, job_id))
+        
+        submit_command = self.submit_command("knl", output_filename, '%s-%08d' % (experiment_name, job_id))
         if 'scheduler-args' in self.options:
             submit_command += ' ' + self.options['scheduler-args']
         # submit_command = shlex.split(submit_command)

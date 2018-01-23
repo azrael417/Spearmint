@@ -217,9 +217,10 @@ def get_options():
     # Read in the config file
     # expt_dir  = os.path.realpath(os.path.expanduser(args[0]))
     expt_dir =  os.path.realpath(os.path.expanduser(os.path.dirname(commandline_kwargs.config_file)))
+    expt_filename = os.path.basename(commandline_kwargs.config_file)
     if not os.path.isdir(expt_dir):
         raise Exception("Cannot find directory %s" % expt_dir)
-    expt_file = os.path.join(expt_dir, commandline_kwargs.config_file)
+    expt_file = os.path.join(expt_dir, expt_filename)
 
     try:
         with open(expt_file, 'r') as f:
@@ -251,7 +252,6 @@ def get_options():
 
 def main():
     options, expt_dir = get_options()
-
     resources = parse_resources_from_config(options)
 
     # Load up the chooser.
@@ -270,7 +270,7 @@ def main():
 
     while True:
 
-        for resource_name, resource in resources.iteritems():
+        for resource_name, resource in resources.items():
 
             jobs = load_jobs(db, experiment_name)
             # resource.printStatus(jobs)
@@ -321,7 +321,7 @@ def tired(db, experiment_name, resources):
     return True if no resources are accepting jobs
     """
     jobs = load_jobs(db, experiment_name)
-    for resource_name, resource in resources.iteritems():
+    for resource_name, resource in resources.items():
         if resource.acceptingJobs(jobs):
             return False
     return True

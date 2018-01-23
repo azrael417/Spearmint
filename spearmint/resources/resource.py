@@ -184,7 +184,7 @@
 
 
 import spearmint
-
+from functools import reduce
 import importlib
 from operator import add
 import numpy as np
@@ -202,7 +202,7 @@ def parse_resources_from_config(config):
     # If resources are specified
     else:
         resources = dict()
-        for resource_name, resource_opts in config["resources"].iteritems():
+        for resource_name, resource_opts in config["resources"].items():
             task_names = parse_tasks_in_resource_from_config(config, resource_name)
             resources[resource_name] = resource_factory(resource_name, task_names, resource_opts)
         return resources
@@ -217,7 +217,7 @@ def parse_tasks_in_resource_from_config(config, resource_name):
         return ['main']
     else:
         tasks = list()
-        for task_name, task_config in config["tasks"].iteritems():
+        for task_name, task_config in config["tasks"].items():
             # If the user specified tasks but not specific resources for those tasks,
             # We have to assume the tasks run on all resources...
             if "resources" not in task_config:

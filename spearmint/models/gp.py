@@ -190,18 +190,18 @@ import scipy.linalg as spla
 import scipy.stats  as sps
 
 from .abstract_model          import AbstractModel
-from ..utils.param            import Param as Hyperparameter
-from ..kernels                import Matern52, Noise, Scale, SumKernel, TransformKernel
-from ..sampling.slice_sampler import SliceSampler
-from ..utils                  import priors
-from ..transformations        import BetaWarp, Transformer
+from utils.param            import Param as Hyperparameter
+from kernels                import Matern52, Noise, Scale, SumKernel, TransformKernel
+from sampling.slice_sampler import SliceSampler
+from utils                  import priors
+from transformations        import BetaWarp, Transformer
 
 try:
     module = sys.modules['__main__'].__file__
     log    = logging.getLogger(module)
 except:
     log    = logging.getLogger()
-    print 'Not running from main.'
+    print('Not running from main.')
 
 DEFAULT_MCMC_ITERS = 10
 DEFAULT_BURNIN     = 100

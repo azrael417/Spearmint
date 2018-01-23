@@ -187,8 +187,8 @@ import numpy       as np
 import scipy.stats as sps
 
 from .abstract_transformation import AbstractTransformation
-from ..utils                  import priors
-from ..utils.param            import Param as Hyperparameter
+from utils                  import priors
+from utils.param            import Param as Hyperparameter
 
 
 def truncate_inputs(func):

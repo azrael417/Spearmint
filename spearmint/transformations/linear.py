@@ -186,8 +186,8 @@
 import numpy as np
 
 from .abstract_transformation import AbstractTransformation
-from ..utils                  import priors
-from ..utils.param            import Param as Hyperparameter
+from utils                  import priors
+from utils.param            import Param as Hyperparameter
 
 
 class Linear(AbstractTransformation):

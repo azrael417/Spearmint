@@ -191,24 +191,24 @@ import scipy.linalg      as spla
 import scipy.optimize    as spo
 import scipy.io          as sio
 import scipy.stats       as sps
-import scipy.weave
+#import scipy.weave
 
 
 from .gp                                     import GP
-from ..utils.param                           import Param as Hyperparameter
-from ..kernels                               import Matern52, Noise, Scale, SumKernel, TransformKernel
-from ..sampling.slice_sampler                import SliceSampler
-from ..sampling.whitened_prior_slice_sampler import WhitenedPriorSliceSampler
-from ..sampling.elliptical_slice_sampler     import EllipticalSliceSampler
-from ..utils                                 import priors
-from ..transformations                       import BetaWarp, Transformer
+from utils.param                           import Param as Hyperparameter
+from kernels                               import Matern52, Noise, Scale, SumKernel, TransformKernel
+from sampling.slice_sampler                import SliceSampler
+from sampling.whitened_prior_slice_sampler import WhitenedPriorSliceSampler
+from sampling.elliptical_slice_sampler     import EllipticalSliceSampler
+from utils                                 import priors
+from transformations                       import BetaWarp, Transformer
 
 try:
     module = sys.modules['__main__'].__file__
     log    = logging.getLogger(module)
 except:
     log = logging.getLogger()
-    print 'Not running from main.'
+    print('Not running from main.')
 
 class GPClassifier(GP):
     def __init__(self, num_dims, **options):

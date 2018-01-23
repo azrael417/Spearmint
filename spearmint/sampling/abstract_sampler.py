@@ -185,7 +185,7 @@
 
 from abc import ABCMeta, abstractmethod
 
-from ..utils import param as hyperparameter_utils
+from utils import param as hyperparameter_utils
 
 
 class AbstractSampler(object):

@@ -184,11 +184,11 @@
 
 
 import numpy as np
-import kernel_utils
+import kernels.kernel_utils
 
 from .abstract_kernel import AbstractKernel
-from ..utils          import priors
-from ..utils.param    import Param as Hyperparameter
+from utils          import priors
+from utils.param    import Param as Hyperparameter
 
 SQRT_3 = np.sqrt(3.0)
 SQRT_5 = np.sqrt(5.0)

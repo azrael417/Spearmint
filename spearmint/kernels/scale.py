@@ -184,8 +184,8 @@
 
 
 from .abstract_kernel import AbstractKernel
-from ..utils          import priors
-from ..utils.param    import Param as Hyperparameter
+from utils          import priors
+from utils.param    import Param as Hyperparameter
 
 
 class Scale(AbstractKernel):
