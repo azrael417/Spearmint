@@ -281,7 +281,7 @@ def main():
             # Note: I chose to fill up one resource and them move on to the next
             # You could also do it the other way, by changing "while" to "if" here
             resource_options = options.get("resources").get(resource_name)
-
+            
             while resource.acceptingJobs(jobs):
 
                 # Load jobs from DB 

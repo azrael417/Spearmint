@@ -187,6 +187,7 @@ from schedulers.abstract_scheduler import AbstractScheduler
 import os
 import subprocess
 import sys
+import shlex
 
 def init(*args, **kwargs):
     return LocalScheduler(*args, **kwargs)
@@ -198,6 +199,7 @@ class LocalScheduler(AbstractScheduler):
         base_path = os.path.dirname(os.path.realpath(spearmint.__file__))
         cmd = ('python %s/launcher.py --database-address %s --experiment-name %s --job-id %s' % 
                (base_path, database_address, experiment_name, job_id))
+        cmd = shlex.split(cmd)
         
         output_directory = os.path.join(experiment_dir, 'output')
         if not os.path.isdir(output_directory):
@@ -209,20 +211,29 @@ class LocalScheduler(AbstractScheduler):
             if not os.path.isdir(output_directory):
                 os.mkdir(output_directory)
 
+        #define output filename
         output_filename = os.path.join(output_directory, '%08d.out' % job_id)
-        output_file = open(output_filename, 'w')
+        #output_file = open(output_filename, 'w+')
 
-        process = subprocess.Popen(cmd, stdout=output_file, 
-                                        stderr=output_file, 
-                                        shell=True)
+        #clone env
+        my_env = os.environ.copy()
 
-        process.poll()
+        #launch the process
+        with open(output_filename, 'w+') as output_file:
+            process = subprocess.Popen(cmd, stdout=output_file, 
+                                       stderr=output_file, 
+                                       env=my_env)
+            process.poll()
+    
+        #check for return codes
         if process.returncode is not None and process.returncode < 0:
             sys.stderr.write("Failed to submit job or job crashed "
                              "with return code %d !\n" % process.returncode)
             return None
         # else:
             # sys.stderr.write("Submitted job as process: %d\n" % process.pid)
+
+        print("PROCID :",process.pid)
 
         return process.pid
         
