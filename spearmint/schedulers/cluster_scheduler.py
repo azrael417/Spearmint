@@ -215,7 +215,9 @@ class AbstractClusterScheduler(object):
         #parse options if available
         exec_command = ""
         if options:
-            if options.get("scheduler","") == "SLURM":
+            #this allows to wrap the srun command in the python script which gets executed,
+            #this is necessary when srun parameters are being optimized as well.
+            if (options.get("scheduler","") == "SLURM") and (options.get("exec-command","")=="srun"):
                 #node config and initial setup
                 num_nodes = options.get("num-nodes",1)
                 ranks_per_node = options.get("num-ranks-per-node",1)
@@ -228,6 +230,7 @@ class AbstractClusterScheduler(object):
         wctime = options.get("wc-time",None)
         if wctime:
             if options.get("scheduler","") == "SLURM":
+                run_command += "#SBATCH -N %i\n" % (num_nodes)
                 run_command += "#SBATCH -t %s\n" % (wctime)
         #preamble
         preamble = options.get("preamble",None)
