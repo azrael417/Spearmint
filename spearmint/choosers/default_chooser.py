@@ -571,9 +571,9 @@ class DefaultChooser(object):
         # To compute the gradient, need to do the chain rule for the product of N factors
         if compute_grad:
             p_grad_prod = np.zeros(p_grad[0].shape)
-            for i in xrange(self.numConstraints()):
+            for i in range(self.numConstraints()):
                 pg = p_grad[i]
-                for j in xrange(self.numConstraints()):
+                for j in range(self.numConstraints()):
                     if j == i:
                         continue
                     pg *= p_valid[j]

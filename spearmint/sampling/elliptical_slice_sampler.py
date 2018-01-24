@@ -210,7 +210,7 @@ class EllipticalSliceSampler(AbstractSampler):
         # Here get the Cholesky from model
 
         params_array = hyperparameter_utils.params_to_array(self.params)
-        for i in xrange(self.thinning + 1):
+        for i in range(self.thinning + 1):
             params_array, current_ll = elliptical_slice(
                 params_array,
                 self.logprob,
@@ -319,7 +319,7 @@ if __name__ == '__main__':
 
     current_time = time.time()
     cur_ll = None
-    for i in xrange(n):
+    for i in range(n):
         if i % 1000 == 0:
             print('Elliptical Slice Sample %d/%d' % (i,n))
         x, cur_ll = elliptical_slice(x, like.logprob, prior_L, prior_mu, cur_log_like=cur_ll)
@@ -353,7 +353,7 @@ if __name__ == '__main__':
     # xx = np.zeros(2)
 
     # current_time = time.time()
-    # for i in xrange(n):
+    # for i in range(n):
     #     if i % 1000 == 0:
     #         print 'Slice Sample %d/%d' % (i,n)
     #     xx, cur_ll = slice_sample(xx, post.logprob)

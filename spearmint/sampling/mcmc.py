@@ -472,7 +472,7 @@ if __name__ == '__main__':
 
     iters = 1000
     samps = np.zeros((iters,D))
-    for ii in xrange(1,iters):
+    for ii in range(1,iters):
         samps[ii,:] = slice_sample(samps[ii-1,:], fn, sigma=0.1, step_out=False, doubling_step=True, verbose=False)
 
     ll = -0.5*np.sum(samps**2, axis=1)

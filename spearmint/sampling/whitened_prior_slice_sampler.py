@@ -227,7 +227,7 @@ class WhitenedPriorSliceSampler(AbstractSampler):
         return lp
 
     def sample(self, model):
-        for i in xrange(self.thinning + 1):
+        for i in range(self.thinning + 1):
             params_array, new_latent_values, current_ll = self.sample_fun(model, **self.sampler_options)
             hyperparameter_utils.set_params_from_array(self.params, params_array)
             model.latent_values.set_value(new_latent_values)
@@ -266,7 +266,7 @@ if __name__ == '__main__':
 
     gsn = priors.Gaussian(mu = -1, sigma = 4)
 
-    for i in xrange(n):
+    for i in range(n):
         if i % 1000 == 0:
             print('Sample %d/%d' % (i,n))
 
@@ -291,7 +291,7 @@ if __name__ == '__main__':
     x_samples = np.zeros((2,n))
     x = np.zeros(2)
 
-    for i in xrange(n):
+    for i in range(n):
         if i % 1000 == 0:
             print('Sample %d/%d' % (i,n))
 

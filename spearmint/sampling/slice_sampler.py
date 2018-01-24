@@ -257,7 +257,7 @@ class SliceSampler(AbstractSampler):
         """
         # turn self.params into a 1d numpy array
         params_array = hyperparameter_utils.params_to_array(self.params)
-        for i in xrange(self.thinning + 1):
+        for i in range(self.thinning + 1):
             # get a new value for the parameter array via slice sampling
             params_array, current_ll = slice_sample(params_array, self.logprob, model, **self.sampler_options)
             hyperparameter_utils.set_params_from_array(self.params, params_array) # Can this be untabbed safely?
@@ -280,7 +280,7 @@ if __name__ == '__main__':
 
     gsn = priors.Gaussian(mu = -1, sigma = 4)
 
-    for i in xrange(n):
+    for i in range(n):
         if i % 1000 == 0:
             print('Sample %d/%d' % (i,n))
 
@@ -305,7 +305,7 @@ if __name__ == '__main__':
     x_samples = np.zeros((2,n))
     x = np.zeros(2)
 
-    for i in xrange(n):
+    for i in range(n):
         if i % 1000 == 0:
             print('Sample %d/%d' % (i,n))
 

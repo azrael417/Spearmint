@@ -211,7 +211,7 @@ def test_fit():
     gp.fit(inputs, vals, pending)
 
     probs = np.zeros(inputs.shape[0])
-    for i in xrange(gp.num_states):
+    for i in range(gp.num_states):
         gp.set_state(i)
         probs += (gp.latent_values.value > 0) / float(mcmc_iters)
 
@@ -275,8 +275,8 @@ def test_predict():
     dloss = 2*(dmu*mu[:,np.newaxis,:]).sum(2) + 2*(v[:,np.newaxis,np.newaxis]*dv).sum(2)
 
     dloss_est = np.zeros(dloss.shape)
-    for i in xrange(Ntest):
-        for j in xrange(D):
+    for i in range(Ntest):
+        for j in range(D):
             pred[i,j] += eps
             mu, v = gp.predict(pred)
             loss_1 = np.sum(mu**2) + np.sum(v**2)

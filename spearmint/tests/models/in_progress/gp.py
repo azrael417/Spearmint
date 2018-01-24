@@ -242,7 +242,7 @@ class DiagnosticGP(GP):
             # 1) Draw new hypers from priors
             # 2) Draw new data given hypers (**NOT** given hypers and data !!!!)
         caseA = np.zeros(n)
-        for i in xrange(n):
+        for i in range(n):
             if i % 1000 == 0:
                 print 'Geweke Part A Sample %d/%d' % (i,n)
             for param in self.hypers:
@@ -261,7 +261,7 @@ class DiagnosticGP(GP):
             # 2) Resample data given hypers
             # repeat a bunch of times
         caseB = np.zeros(n)
-        for i in xrange(n):
+        for i in range(n):
             if i % 1000 == 0:
                 print 'Geweke Part B Sample %d/%d' % (i,n)
             # Take MCMC step on theta given data
@@ -288,7 +288,7 @@ class DiagnosticGP(GP):
 
         # Then for each a in A, take the fraction of B smaller than it. 
         yAxis = np.zeros(n)
-        for i in xrange(n):
+        for i in range(n):
             yAxis[i] = np.sum(caseB < caseA[i]) / float(n)
 
         xAxis = np.arange(n)/float(n)
