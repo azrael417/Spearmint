@@ -400,7 +400,7 @@ def mcr_launcher(job):
     # Change into the directory.
     os.chdir(job['expt_dir'])
 
-    if os.environ.has_key('MATLAB'):
+    if 'MATLAB' in os.environ:
         mcr_loc = os.environ['MATLAB']
     else:
         raise Exception("Please set the MATLAB environment variable")

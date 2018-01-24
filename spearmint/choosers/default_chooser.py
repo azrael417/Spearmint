@@ -299,7 +299,7 @@ class DefaultChooser(object):
 
                 self.models[task_name] = getattr(models, model_class)(task_group.num_dims, **task.options)
 
-                vals = data_dict['values'] if data_dict.has_key('values') else data_dict['counts']
+                vals = data_dict['values'] if 'values' in data_dict else data_dict['counts']
 
                 sys.stderr.write('Fitting %s for %s task...\n' % (model_class, task_name))
                 new_hypers[task_name] = self.models[task_name].fit(

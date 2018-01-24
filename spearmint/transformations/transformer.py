@@ -243,7 +243,7 @@ class Transformer(object):
             for i in inds:
                 counts[i] += 1
 
-        assert np.array(counts.keys()).max() < self.num_dims, 'Maximum index exceeds number of dimensions.'
+        assert np.array(list(counts.keys())).max() < self.num_dims, 'Maximum index exceeds number of dimensions.'
         assert all([count == 1 for count in counts.values()]), 'Each index may only be used once.'
 
     def forward_pass(self, inputs):
