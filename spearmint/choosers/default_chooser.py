@@ -188,6 +188,7 @@ import numpy          as np
 import numpy.random   as npr
 import scipy.optimize as spo
 import multiprocessing
+from functools import reduce
 
 from collections import defaultdict
 

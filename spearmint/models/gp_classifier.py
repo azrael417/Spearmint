@@ -476,7 +476,7 @@ class GPClassifier(GP):
         gp_dict = {}
 
         gp_dict['hypers'] = {}
-        for name, hyper in self.params.iteritems():
+        for name, hyper in self.params.items():
             gp_dict['hypers'][name] = hyper.value
 
         # Save the latent values as a dict with keys as hashes of the data

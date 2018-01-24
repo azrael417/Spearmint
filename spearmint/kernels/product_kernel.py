@@ -183,6 +183,7 @@
 # its Institution.
 
 
+from functools import reduce
 import numpy as np
 
 from .abstract_kernel import AbstractKernel

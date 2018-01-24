@@ -274,7 +274,7 @@ class GP(AbstractModel):
             self.noiseless = False
 
     def _set_params_from_dict(self, hypers_dict):
-        for name, hyper in self.params.iteritems():
+        for name, hyper in self.params.items():
             self.params[name].value = hypers_dict[name]
 
     def _reset_params(self):
@@ -463,7 +463,7 @@ class GP(AbstractModel):
     def to_dict(self):
         """return a dictionary that saves the values of the hypers and the chain length"""
         gp_dict = {'hypers' : {}}
-        for name, hyper in self.params.iteritems():
+        for name, hyper in self.params.items():
             gp_dict['hypers'][name] = hyper.value
 
         gp_dict['chain length'] = self.chain_length

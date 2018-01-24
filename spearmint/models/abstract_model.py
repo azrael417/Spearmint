@@ -183,6 +183,7 @@
 # its Institution.
 
 import numpy        as np
+from functools import reduce
 
 from abc import ABCMeta, abstractmethod
 

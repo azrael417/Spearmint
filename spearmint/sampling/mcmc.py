@@ -340,7 +340,7 @@ def slice_sample(init_x, logprob, *logprob_args, **slice_sample_args):
 
     dims = init_x.shape[0]
     if compwise:
-        ordering = range(dims)
+        ordering = list(range(dims))
         npr.shuffle(ordering)
         new_x = init_x.copy()
         for d in ordering:
